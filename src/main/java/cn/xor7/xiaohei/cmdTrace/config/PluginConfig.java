@@ -10,5 +10,5 @@ public record PluginConfig(
     int maxLimit,
     int defaultRecentLimit,
     boolean regexEnabled,
-    List<String> mcdrPrefixes
+    List<String> customCmdPrefixes
 ) {}

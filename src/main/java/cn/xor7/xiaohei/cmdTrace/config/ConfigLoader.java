@@ -17,7 +17,7 @@ public final class ConfigLoader {
 
     public static PluginConfig load(Path dataDirectory) throws IOException {
         Files.createDirectories(dataDirectory);
-        Path configFile = dataDirectory.resolve("cmdtrace.properties");
+        Path configFile = dataDirectory.resolve("cmdlog.properties");
         copyDefaultConfigIfMissing(configFile);
         Properties properties = loadProperties(configFile);
         return new PluginConfig(
@@ -27,7 +27,7 @@ public final class ConfigLoader {
             parsePositiveInt(properties, "query.max-limit"),
             parsePositiveInt(properties, "query.default-recent-limit"),
             Boolean.parseBoolean(require(properties, "query.enable-regex")),
-            parsePrefixes(properties, "query.mcdr-prefixes")
+            parsePrefixes(properties, "query.custom-cmd-prefixes")
         );
     }
 
@@ -40,11 +40,11 @@ public final class ConfigLoader {
         try (
             InputStream inputStream =
                 ConfigLoader.class.getClassLoader().getResourceAsStream(
-                    "cmdtrace.properties"
+                    "cmdlog.properties"
                 )
         ) {
             if (inputStream == null) {
-                throw new IOException("缺少默认配置文件 cmdtrace.properties");
+                throw new IOException("缺少默认配置文件 cmdlog.properties");
             }
 
             try (

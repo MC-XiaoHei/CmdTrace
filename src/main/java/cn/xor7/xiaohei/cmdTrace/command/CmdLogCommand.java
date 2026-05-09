@@ -22,7 +22,7 @@ public final class CmdLogCommand implements SimpleCommand {
 
     private static final LegacyComponentSerializer LEGACY_SERIALIZER =
         LegacyComponentSerializer.legacySection();
-    private static final String QUERY_PERMISSION = "cmdtrace.query";
+    private static final String QUERY_PERMISSION = "cmdlog.query";
 
     private final PluginConfig config;
     private final CommandLogService commandLogService;

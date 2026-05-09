@@ -1,4 +1,4 @@
-# CmdTrace
+# CmdLog
 
 一个运行在 Velocity 上的命令日志插件。
 
@@ -13,7 +13,7 @@
 ```log
 > /cmdlog help
 
-CmdTrace 查询帮助
+CmdLog 查询帮助
 用法：/cmdlog [--server <服务器名>] [--player <玩家名>] [--uuid <UUID>]
       [--startswith <前缀> | --contains <关键词> | --regex <正则>]
       [--from <时间>] [--to <时间>] [--limit <数量>]
@@ -37,7 +37,7 @@ CmdTrace 查询帮助
 
 ## 权限
 
-- `cmdtrace.query`
+- `cmdlog.query`
 
 ---
 
@@ -45,7 +45,7 @@ CmdTrace 查询帮助
 
 ```properties
 # SQLite 数据库文件名，最终会放在插件数据目录下
-# 例如 plugins/cmd-trace/data.db
+# 例如 plugins/cmd-log/data.db
 database.file=data.db
 
 # 日志保留天数
@@ -66,5 +66,5 @@ query.enable-regex=true
 
 # 额外记录的聊天前缀，多个用英文逗号分隔
 # 例如 !!,##
-query.mcdr-prefixes=!!
+query.custom-cmd-prefixes=!!
 ```

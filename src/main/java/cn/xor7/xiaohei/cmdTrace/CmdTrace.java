@@ -24,7 +24,7 @@ import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 
-@Plugin(id = "cmd-trace", name = "CmdTrace", version = BuildConstants.VERSION)
+@Plugin(id = "cmd-log", name = "CmdTrace", version = BuildConstants.VERSION)
 public class CmdTrace {
 
     private final ProxyServer proxyServer;
@@ -76,7 +76,10 @@ public class CmdTrace {
         } catch (IOException | SQLException | RuntimeException exception) {
             logger.error("Failed to start CmdTrace", exception);
             closeDatabaseQuietly();
-            throw new IllegalStateException("Failed to start CmdTrace", exception);
+            throw new IllegalStateException(
+                "Failed to start CmdTrace",
+                exception
+            );
         }
     }
 

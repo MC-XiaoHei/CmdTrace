@@ -56,7 +56,7 @@ public final class PlayerCommandListener {
             return false;
         }
 
-        List<String> prefixes = config.mcdrPrefixes();
+        List<String> prefixes = config.customCmdPrefixes();
         for (String prefix : prefixes) {
             if (message.startsWith(prefix)) {
                 return true;

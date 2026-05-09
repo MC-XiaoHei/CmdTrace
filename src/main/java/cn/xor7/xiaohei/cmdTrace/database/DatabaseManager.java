@@ -102,7 +102,7 @@ public final class DatabaseManager {
         public Thread newThread(Runnable runnable) {
             Thread thread = new Thread(
                 runnable,
-                "cmdtrace-db-" + THREAD_COUNTER.getAndIncrement()
+                "cmdlog-db-" + THREAD_COUNTER.getAndIncrement()
             );
             thread.setDaemon(true);
             return thread;
