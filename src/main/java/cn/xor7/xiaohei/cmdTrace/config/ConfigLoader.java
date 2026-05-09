@@ -20,14 +20,42 @@ public final class ConfigLoader {
         Path configFile = dataDirectory.resolve("cmdlog.properties");
         copyDefaultConfigIfMissing(configFile);
         Properties properties = loadProperties(configFile);
+
+        Path databaseFile = dataDirectory.resolve(
+            require(properties, "database.file")
+        );
+        int retentionDays = parsePositiveInt(properties, "retention.days");
+        int defaultLimit = parsePositiveInt(properties, "query.default-limit");
+        int maxLimit = parsePositiveInt(properties, "query.max-limit");
+        int defaultRecentLimit = parsePositiveInt(
+            properties,
+            "query.default-recent-limit"
+        );
+        boolean regexEnabled = parseBoolean(properties, "query.enable-regex");
+        List<String> customPrefixes = parsePrefixes(
+            properties,
+            "query.custom-cmd-prefixes"
+        );
+
+        validateLimitRelationship(
+            "query.default-limit",
+            defaultLimit,
+            maxLimit
+        );
+        validateLimitRelationship(
+            "query.default-recent-limit",
+            defaultRecentLimit,
+            maxLimit
+        );
+
         return new PluginConfig(
-            dataDirectory.resolve(require(properties, "database.file")),
-            parsePositiveInt(properties, "retention.days"),
-            parsePositiveInt(properties, "query.default-limit"),
-            parsePositiveInt(properties, "query.max-limit"),
-            parsePositiveInt(properties, "query.default-recent-limit"),
-            Boolean.parseBoolean(require(properties, "query.enable-regex")),
-            parsePrefixes(properties, "query.custom-cmd-prefixes")
+            databaseFile,
+            retentionDays,
+            defaultLimit,
+            maxLimit,
+            defaultRecentLimit,
+            regexEnabled,
+            customPrefixes
         );
     }
 
@@ -44,7 +72,9 @@ public final class ConfigLoader {
                 )
         ) {
             if (inputStream == null) {
-                throw new IOException("缺少默认配置文件 cmdlog.properties");
+                throw new IOException(
+                    "Missing default config file: cmdlog.properties"
+                );
             }
 
             try (
@@ -67,17 +97,52 @@ public final class ConfigLoader {
     private static String require(Properties properties, String key) {
         return Objects.requireNonNull(
             properties.getProperty(key),
-            () -> "缺少配置项: " + key
+            () -> "Missing required config key: " + key
         ).trim();
     }
 
     private static int parsePositiveInt(Properties properties, String key) {
         String value = require(properties, key);
-        int parsed = Integer.parseInt(value);
+        int parsed;
+        try {
+            parsed = Integer.parseInt(value);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException(
+                "Invalid config format: " +
+                    key +
+                    "='" +
+                    value +
+                    "' must be a positive integer",
+                exception
+            );
+        }
         if (parsed <= 0) {
-            throw new IllegalArgumentException("配置项必须大于 0: " + key);
+            throw new IllegalArgumentException(
+                "Invalid config value: " +
+                    key +
+                    "='" +
+                    value +
+                    "' must be greater than 0"
+            );
         }
         return parsed;
+    }
+
+    private static boolean parseBoolean(Properties properties, String key) {
+        String value = require(properties, key);
+        if ("true".equalsIgnoreCase(value)) {
+            return true;
+        }
+        if ("false".equalsIgnoreCase(value)) {
+            return false;
+        }
+        throw new IllegalArgumentException(
+            "Invalid config format: " +
+                key +
+                "='" +
+                value +
+                "' must be either true or false"
+        );
     }
 
     private static List<String> parsePrefixes(
@@ -91,8 +156,32 @@ public final class ConfigLoader {
             .distinct()
             .collect(Collectors.toList());
         if (prefixes.isEmpty()) {
-            throw new IllegalArgumentException("配置项不能为空: " + key);
+            throw new IllegalArgumentException(
+                "Invalid config value: " +
+                    key +
+                    "='" +
+                    value +
+                    "' must contain at least one non-empty prefix"
+            );
         }
         return List.copyOf(prefixes);
+    }
+
+    private static void validateLimitRelationship(
+        String key,
+        int value,
+        int maxLimit
+    ) {
+        if (value > maxLimit) {
+            throw new IllegalArgumentException(
+                "Invalid config value: " +
+                    key +
+                    "='" +
+                    value +
+                    "' must not be greater than query.max-limit='" +
+                    maxLimit +
+                    "'"
+            );
+        }
     }
 }
