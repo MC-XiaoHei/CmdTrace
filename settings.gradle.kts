@@ -1,1 +1,1 @@
-rootProject.name = "CmdTrace"
+rootProject.name = "CmdLog"
