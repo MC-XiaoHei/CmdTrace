@@ -6,7 +6,7 @@ plugins {
     id("com.gradleup.shadow") version "9.4.1"
     id("xyz.jpenilla.run-velocity") version "3.0.2"
     id("eclipse")
-    id("org.jetbrains.gradle.plugin.idea-ext") version ""
+    id("org.jetbrains.gradle.plugin.idea-ext") version "1.4.1"
 }
 
 repositories {
@@ -17,6 +17,8 @@ repositories {
 dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
+
+    implementation("org.xerial:sqlite-jdbc:3.50.3.0")
 }
 
 java {
@@ -24,16 +26,21 @@ java {
 }
 
 tasks {
+    withType<JavaCompile> {
+        options.encoding = "UTF-8"
+    }
+
     build {
         dependsOn(shadowJar)
     }
 
-  runVelocity {
-    // Configure the Velocity version for our task.
-    // This is the only required configuration besides applying the plugin.
-    // Your plugin's jar (or shadowJar if present) will be used automatically.
-    velocityVersion("3.5.0-SNAPSHOT")
-  }
+    shadowJar {
+        mergeServiceFiles()
+    }
+
+    runVelocity {
+        velocityVersion("3.5.0-SNAPSHOT")
+    }
 }
 
 val templateSource = file("src/main/templates")
