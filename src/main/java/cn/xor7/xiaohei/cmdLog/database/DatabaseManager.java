@@ -1,6 +1,6 @@
-package cn.xor7.xiaohei.cmdTrace.database;
+package cn.xor7.xiaohei.cmdLog.database;
 
-import cn.xor7.xiaohei.cmdTrace.config.PluginConfig;
+import cn.xor7.xiaohei.cmdLog.config.PluginConfig;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

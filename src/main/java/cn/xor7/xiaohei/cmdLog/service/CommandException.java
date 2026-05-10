@@ -1,4 +1,4 @@
-package cn.xor7.xiaohei.cmdTrace.service;
+package cn.xor7.xiaohei.cmdLog.service;
 
 public final class CommandException extends RuntimeException {
 

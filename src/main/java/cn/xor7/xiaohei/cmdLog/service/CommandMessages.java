@@ -1,10 +1,10 @@
-package cn.xor7.xiaohei.cmdTrace.service;
+package cn.xor7.xiaohei.cmdLog.service;
 
-import cn.xor7.xiaohei.cmdTrace.config.PluginConfig;
-import cn.xor7.xiaohei.cmdTrace.model.CommandLogEntry;
-import cn.xor7.xiaohei.cmdTrace.model.CommandSearchCriteria;
-import cn.xor7.xiaohei.cmdTrace.model.MatchMode;
-import cn.xor7.xiaohei.cmdTrace.util.TimeParser;
+import cn.xor7.xiaohei.cmdLog.config.PluginConfig;
+import cn.xor7.xiaohei.cmdLog.model.CommandLogEntry;
+import cn.xor7.xiaohei.cmdLog.model.CommandSearchCriteria;
+import cn.xor7.xiaohei.cmdLog.model.MatchMode;
+import cn.xor7.xiaohei.cmdLog.util.TimeParser;
 import java.time.LocalDate;
 import java.util.List;
 import net.kyori.adventure.text.Component;
@@ -23,7 +23,7 @@ public final class CommandMessages {
 
     public List<String> buildHelpLines() {
         return List.of(
-            "§6CmdTrace 查询帮助",
+            "§6CmdLog 查询帮助",
             "§7用法：/cmdlog [--server <服务器名>] [--player <玩家名>] [--uuid <UUID>]",
             "§7      [--startswith <前缀> | --contains <关键词> | --regex <正则>]",
             "§7      [--from <时间>] [--to <时间>] [--limit <数量>]",

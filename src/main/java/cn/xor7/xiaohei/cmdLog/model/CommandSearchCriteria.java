@@ -1,4 +1,4 @@
-package cn.xor7.xiaohei.cmdTrace.model;
+package cn.xor7.xiaohei.cmdLog.model;
 
 import java.time.LocalDateTime;
 import java.util.List;

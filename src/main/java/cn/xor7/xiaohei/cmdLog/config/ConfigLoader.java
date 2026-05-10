@@ -1,4 +1,4 @@
-package cn.xor7.xiaohei.cmdTrace.config;
+package cn.xor7.xiaohei.cmdLog.config;
 
 import java.io.IOException;
 import java.io.InputStream;

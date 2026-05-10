@@ -1,6 +1,6 @@
 # Style Guide
 
-本文档定义 `CmdTrace` 项目的代码风格、注释风格与 Git 提交规范。
+本文档定义 `CmdLog` 项目的代码风格、注释风格与 Git 提交规范。
 
 ---
 

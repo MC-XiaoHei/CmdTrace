@@ -1,10 +1,10 @@
-package cn.xor7.xiaohei.cmdTrace.database;
+package cn.xor7.xiaohei.cmdLog.database;
 
-import cn.xor7.xiaohei.cmdTrace.model.CommandLogEntry;
-import cn.xor7.xiaohei.cmdTrace.model.CommandLogRecord;
-import cn.xor7.xiaohei.cmdTrace.model.CommandSearchCriteria;
-import cn.xor7.xiaohei.cmdTrace.model.MatchMode;
-import cn.xor7.xiaohei.cmdTrace.util.SqlLikeEscaper;
+import cn.xor7.xiaohei.cmdLog.model.CommandLogEntry;
+import cn.xor7.xiaohei.cmdLog.model.CommandLogRecord;
+import cn.xor7.xiaohei.cmdLog.model.CommandSearchCriteria;
+import cn.xor7.xiaohei.cmdLog.model.MatchMode;
+import cn.xor7.xiaohei.cmdLog.util.SqlLikeEscaper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

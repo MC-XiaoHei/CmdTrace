@@ -1,10 +1,10 @@
-package cn.xor7.xiaohei.cmdTrace.service;
+package cn.xor7.xiaohei.cmdLog.service;
 
-import cn.xor7.xiaohei.cmdTrace.config.PluginConfig;
-import cn.xor7.xiaohei.cmdTrace.database.DatabaseManager;
-import cn.xor7.xiaohei.cmdTrace.model.CommandLogEntry;
-import cn.xor7.xiaohei.cmdTrace.model.CommandLogRecord;
-import cn.xor7.xiaohei.cmdTrace.model.CommandSearchCriteria;
+import cn.xor7.xiaohei.cmdLog.config.PluginConfig;
+import cn.xor7.xiaohei.cmdLog.database.DatabaseManager;
+import cn.xor7.xiaohei.cmdLog.model.CommandLogEntry;
+import cn.xor7.xiaohei.cmdLog.model.CommandLogRecord;
+import cn.xor7.xiaohei.cmdLog.model.CommandSearchCriteria;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

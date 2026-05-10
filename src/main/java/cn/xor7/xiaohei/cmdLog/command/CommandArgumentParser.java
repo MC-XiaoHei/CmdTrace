@@ -1,11 +1,11 @@
-package cn.xor7.xiaohei.cmdTrace.command;
+package cn.xor7.xiaohei.cmdLog.command;
 
-import cn.xor7.xiaohei.cmdTrace.config.PluginConfig;
-import cn.xor7.xiaohei.cmdTrace.model.CommandSearchCriteria;
-import cn.xor7.xiaohei.cmdTrace.model.MatchMode;
-import cn.xor7.xiaohei.cmdTrace.service.CommandException;
-import cn.xor7.xiaohei.cmdTrace.service.CommandMessages;
-import cn.xor7.xiaohei.cmdTrace.util.TimeParser;
+import cn.xor7.xiaohei.cmdLog.config.PluginConfig;
+import cn.xor7.xiaohei.cmdLog.model.CommandSearchCriteria;
+import cn.xor7.xiaohei.cmdLog.model.MatchMode;
+import cn.xor7.xiaohei.cmdLog.service.CommandException;
+import cn.xor7.xiaohei.cmdLog.service.CommandMessages;
+import cn.xor7.xiaohei.cmdLog.util.TimeParser;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import java.time.format.DateTimeParseException;

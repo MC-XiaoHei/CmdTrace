@@ -1,8 +1,8 @@
-package cn.xor7.xiaohei.cmdTrace.listener;
+package cn.xor7.xiaohei.cmdLog.listener;
 
-import cn.xor7.xiaohei.cmdTrace.config.PluginConfig;
-import cn.xor7.xiaohei.cmdTrace.model.CommandLogRecord;
-import cn.xor7.xiaohei.cmdTrace.service.CommandLogService;
+import cn.xor7.xiaohei.cmdLog.config.PluginConfig;
+import cn.xor7.xiaohei.cmdLog.model.CommandLogRecord;
+import cn.xor7.xiaohei.cmdLog.service.CommandLogService;
 import com.velocitypowered.api.command.CommandResult;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.command.PostCommandInvocationEvent;

@@ -1,13 +1,13 @@
-package cn.xor7.xiaohei.cmdTrace;
+package cn.xor7.xiaohei.cmdLog;
 
-import cn.xor7.xiaohei.cmdTrace.command.CmdLogCommand;
-import cn.xor7.xiaohei.cmdTrace.command.CommandArgumentParser;
-import cn.xor7.xiaohei.cmdTrace.config.ConfigLoader;
-import cn.xor7.xiaohei.cmdTrace.config.PluginConfig;
-import cn.xor7.xiaohei.cmdTrace.database.DatabaseManager;
-import cn.xor7.xiaohei.cmdTrace.listener.PlayerCommandListener;
-import cn.xor7.xiaohei.cmdTrace.service.CommandLogService;
-import cn.xor7.xiaohei.cmdTrace.service.CommandMessages;
+import cn.xor7.xiaohei.cmdLog.command.CmdLogCommand;
+import cn.xor7.xiaohei.cmdLog.command.CommandArgumentParser;
+import cn.xor7.xiaohei.cmdLog.config.ConfigLoader;
+import cn.xor7.xiaohei.cmdLog.config.PluginConfig;
+import cn.xor7.xiaohei.cmdLog.database.DatabaseManager;
+import cn.xor7.xiaohei.cmdLog.listener.PlayerCommandListener;
+import cn.xor7.xiaohei.cmdLog.service.CommandLogService;
+import cn.xor7.xiaohei.cmdLog.service.CommandMessages;
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
@@ -24,8 +24,8 @@ import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 
-@Plugin(id = "cmd-log", name = "CmdTrace", version = BuildConstants.VERSION)
-public class CmdTrace {
+@Plugin(id = "cmd-log", name = "CmdLog", version = BuildConstants.VERSION)
+public class CmdLog {
 
     private final ProxyServer proxyServer;
     private final Logger logger;
@@ -33,7 +33,7 @@ public class CmdTrace {
     private DatabaseManager databaseManager;
 
     @Inject
-    public CmdTrace(
+    public CmdLog(
         ProxyServer proxyServer,
         Logger logger,
         @DataDirectory Path dataDirectory
@@ -72,12 +72,12 @@ public class CmdTrace {
                     new PlayerCommandListener(logger, config, commandLogService)
                 );
             scheduleCleanup(commandLogService);
-            logger.info("CmdTrace enabled");
+            logger.info("CmdLog enabled");
         } catch (IOException | SQLException | RuntimeException exception) {
-            logger.error("Failed to start CmdTrace", exception);
+            logger.error("Failed to start CmdLog", exception);
             closeDatabaseQuietly();
             throw new IllegalStateException(
-                "Failed to start CmdTrace",
+                "Failed to start CmdLog",
                 exception
             );
         }
@@ -128,14 +128,14 @@ public class CmdTrace {
             .cleanupExpiredLogsAsync()
             .thenAccept(deletedCount ->
                 logger.info(
-                    "CmdTrace cleanup completed (trigger: {}), deleted {} expired records",
+                    "CmdLog cleanup completed (trigger: {}), deleted {} expired records",
                     triggerSource,
                     deletedCount
                 )
             )
             .exceptionally(exception -> {
                 logger.error(
-                    "CmdTrace cleanup failed (trigger: {})",
+                    "CmdLog cleanup failed (trigger: {})",
                     triggerSource,
                     unwrapCompletionException(exception)
                 );
@@ -161,7 +161,7 @@ public class CmdTrace {
         try {
             databaseManager.close();
         } catch (SQLException exception) {
-            logger.error("Failed to close CmdTrace database", exception);
+            logger.error("Failed to close CmdLog database", exception);
         } finally {
             databaseManager = null;
         }
