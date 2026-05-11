@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 public final class ConfigLoader {
 
+    private static final String DEFAULT_COMMAND_PREFIX = "/";
+
     private ConfigLoader() {}
 
     public static PluginConfig load(Path dataDirectory) throws IOException {
@@ -36,6 +38,10 @@ public final class ConfigLoader {
             properties,
             "query.custom-cmd-prefixes"
         );
+        List<String> ignoredCommandPrefixes = parseCommandPrefixes(
+            properties,
+            "record.ignore-cmd-prefixes"
+        );
 
         validateLimitRelationship(
             "query.default-limit",
@@ -55,7 +61,8 @@ public final class ConfigLoader {
             maxLimit,
             defaultRecentLimit,
             regexEnabled,
-            customPrefixes
+            customPrefixes,
+            ignoredCommandPrefixes
         );
     }
 
@@ -156,6 +163,27 @@ public final class ConfigLoader {
             .distinct()
             .collect(Collectors.toList());
         return List.copyOf(prefixes);
+    }
+
+    private static List<String> parseCommandPrefixes(
+        Properties properties,
+        String key
+    ) {
+        String value = require(properties, key);
+        List<String> prefixes = Arrays.stream(value.split(","))
+            .map(String::trim)
+            .filter(prefix -> !prefix.isEmpty())
+            .map(ConfigLoader::normalizeCommandPrefix)
+            .distinct()
+            .collect(Collectors.toList());
+        return List.copyOf(prefixes);
+    }
+
+    private static String normalizeCommandPrefix(String prefix) {
+        if (prefix.startsWith(DEFAULT_COMMAND_PREFIX)) {
+            return prefix;
+        }
+        return DEFAULT_COMMAND_PREFIX + prefix;
     }
 
     private static void validateLimitRelationship(

@@ -68,4 +68,11 @@ query.enable-regex=true
 # 留空表示不启用额外前缀
 # 例如 !!,##
 query.custom-cmd-prefixes=
+
+# 不记录的命令前缀，多个用英文逗号分隔
+# 留空表示不启用黑名单
+# 按命令词匹配，例如 /setblock 会匹配 /setblock 和 /setblock xxx
+# 未以 / 开头时会自动补成 /，例如 setblock 会按 /setblock 处理
+# 例如 /setblock,/summon
+record.ignore-cmd-prefixes=
 ```

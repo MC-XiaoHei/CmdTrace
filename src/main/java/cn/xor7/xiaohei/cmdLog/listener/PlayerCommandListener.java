@@ -65,7 +65,42 @@ public final class PlayerCommandListener {
         return false;
     }
 
+    private boolean shouldIgnoreCommand(String rawCommand) {
+        if (rawCommand == null || rawCommand.isBlank()) {
+            return true;
+        }
+
+        List<String> ignoredPrefixes = config.ignoredCommandPrefixes();
+        for (String ignoredPrefix : ignoredPrefixes) {
+            if (matchesIgnoredCommandPrefix(rawCommand, ignoredPrefix)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean matchesIgnoredCommandPrefix(
+        String rawCommand,
+        String ignoredPrefix
+    ) {
+        if (!rawCommand.startsWith(ignoredPrefix)) {
+            return false;
+        }
+
+        if (rawCommand.length() == ignoredPrefix.length()) {
+            return true;
+        }
+
+        return Character.isWhitespace(
+            rawCommand.charAt(ignoredPrefix.length())
+        );
+    }
+
     private void logPlayerCommand(Player player, String rawCommand) {
+        if (shouldIgnoreCommand(rawCommand)) {
+            return;
+        }
+
         player
             .getCurrentServer()
             .ifPresent(serverConnection -> {
